@@ -10,7 +10,13 @@ public class AirplaneController : MonoBehaviour
     [Tooltip("Постоянная скорость движения вперёд")]
     public float forwardSpeed = 0f;
 
-    public float maxSpeed = 1f;
+    [Tooltip("Минимальная скорость при отпущенном курке")]
+    public float minSpeed = 0f;
+
+    [Tooltip("Максимальная скорость при полностью нажатом курке")]
+    public float maxSpeed = 100f;
+    
+	//public float maxSpeed = 1f;
     [Tooltip("Насколько быстро самолёт набирает скорость (инерция разгона)")]
     public float acceleration = 5f;
 
@@ -84,7 +90,9 @@ public class AirplaneController : MonoBehaviour
             targetRoll = stickRoll - targetYaw * yawRollInfluence;
             
             // R2: управление тягой
-            forwardSpeed = maxSpeed * (Gamepad.current.rightTrigger.ReadValue() - Gamepad.current.leftTrigger.ReadValue());
+            //forwardSpeed = maxSpeed * (Gamepad.current.rightTrigger.ReadValue() - Gamepad.current.leftTrigger.ReadValue());
+            float trigger = Gamepad.current.rightTrigger.ReadValue() - Gamepad.current.leftTrigger.ReadValue();
+            forwardSpeed = Mathf.Lerp(minSpeed, maxSpeed, trigger);
         }
         else
         {
