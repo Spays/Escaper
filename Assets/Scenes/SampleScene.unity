@@ -299,6 +299,7 @@ MonoBehaviour:
   perpendicularDragCoefficient: 0.5
   maxPerpendicularDrag: 5
   turnAroundSpeed: 180
+  speedChangeRate: 0
 --- !u!1 &102199542
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,7 +383,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 102199542}
-  m_Mesh: {fileID: -2432090755550338912, guid: 206ec58b785ac1e48960d00d31f87579, type: 3}
+  m_Mesh: {fileID: -2432090755550338912, guid: af2f821045adfc54e90eb38f7d6414a2, type: 3}
 --- !u!64 &102199547
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2998,12 +2999,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1935562065}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b289bba73684514886241f4aa170299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 5
+  rotationSpeed: 2
   maxAngle: 30
   joystickInput: 0
 --- !u!1 &1949521114

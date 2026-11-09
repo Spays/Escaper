@@ -54,6 +54,8 @@ public class AirplaneController : MonoBehaviour
 	private bool isTurningAround;
 	private Quaternion turnAroundTarget;
 
+	public float speedChangeRate = 0;
+	
     private Rigidbody rb;
     private float currentSpeed;
     
@@ -130,7 +132,20 @@ public class AirplaneController : MonoBehaviour
         targetRoll = stickRoll - targetYaw * yawRollInfluence;
 
 // Изменение заданной скорости
+
 	    forwardSpeed = Mathf.Lerp(minSpeed, maxSpeed, speedInput);
+
+	    if (true)
+	    {
+		    forwardSpeed = Mathf.Lerp(minSpeed, maxSpeed, speedInput);
+	    }
+	    else
+	    {
+		    // Изменение заданной скорости
+		    forwardSpeed += speedInput * speedChangeRate * Time.deltaTime;
+		    forwardSpeed = Mathf.Clamp(forwardSpeed, minSpeed, maxSpeed);
+	    }
+	    
 	    
 		if (Gamepad.current != null && (Gamepad.current.buttonSouth.wasPressedThisFrame || (Keyboard.current.rKey.isPressed)) && !isTurningAround)
 		{
