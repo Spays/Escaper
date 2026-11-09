@@ -71,37 +71,68 @@ public class AirplaneController : MonoBehaviour
 
     void Update()
     {
+	    float keyboardPitch = 0f;
+	    float keyboardRoll = 0f;
+	    float keyboardYaw = 0f;
+	    float keyboardSpeed = 0f;
+
+// Клавиатура
+	    if (Keyboard.current != null)
+	    {
+		    if (Keyboard.current.sKey.isPressed) keyboardPitch += 1f;
+		    if (Keyboard.current.wKey.isPressed) keyboardPitch -= 1f;
+
+		    if (Keyboard.current.aKey.isPressed) keyboardRoll += 1f;
+		    if (Keyboard.current.dKey.isPressed) keyboardRoll -= 1f;
+
+		    if (Keyboard.current.qKey.isPressed) keyboardYaw -= 1f;
+		    if (Keyboard.current.eKey.isPressed) keyboardYaw += 1f;
+
+		    if (Keyboard.current.spaceKey.isPressed) keyboardSpeed += 1f;
+		    if (Keyboard.current.ctrlKey.isPressed) keyboardSpeed -= 1f;
+	    }
+	    
+	    // Значения управления с геймпада
+	    float gamepadPitch = 0f;
+	    float gamepadRoll = 0f;
+	    float gamepadYaw = 0f;
+	    float gamepadSpeed = 0f;
+	    
         // 1. Получение ввода от игрока
         //if (forwardSpeed > 0) { forwardSpeed = forwardSpeed - Gamepad.current.leftTrigger.ReadValue() * acceleration; }
         if (Gamepad.current != null)
         {
-            // Левый стик: наклон носа вверх/вниз
-            Vector2 leftStick = Gamepad.current.leftStick.ReadValue();
-            targetPitch = leftStick.y * pitchSpeed;
+	        Vector2 leftStick = Gamepad.current.leftStick.ReadValue();
+	        Vector2 rightStick = Gamepad.current.rightStick.ReadValue();
 
-            // Левый стик: крен
-            float stickRoll = -leftStick.x * rollSpeed;
+	        gamepadPitch = leftStick.y;
+	        gamepadRoll = -leftStick.x;
+	        gamepadYaw = rightStick.x;
 
-            // Правый стик: рыскание
-            Vector2 rightStick = Gamepad.current.rightStick.ReadValue();
-            targetYaw = rightStick.x * yawSpeed;
+	        float increaseInput = Gamepad.current.rightTrigger.ReadValue();
+	        float decreaseInput = Gamepad.current.leftTrigger.ReadValue();
 
-            // Смешиваем ручной крен и автоматический наклон от рыскания
-            targetRoll = stickRoll - targetYaw * yawRollInfluence;
-            
-            // R2: управление тягой
-            //forwardSpeed = maxSpeed * (Gamepad.current.rightTrigger.ReadValue() - Gamepad.current.leftTrigger.ReadValue());
-            float trigger = Gamepad.current.rightTrigger.ReadValue() - Gamepad.current.leftTrigger.ReadValue();
-            forwardSpeed = Mathf.Lerp(minSpeed, maxSpeed, trigger);
+	        gamepadSpeed = increaseInput - decreaseInput;
+	        forwardSpeed = Mathf.Lerp(minSpeed, maxSpeed, gamepadSpeed);
         }
-        else
-        {
-            // При отключении геймпада плавно возвращаем управление в нейтраль
-            targetPitch = 0f;
-            targetRoll = 0f;
-            targetYaw = 0f;
-        }
-		if (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame && !isTurningAround)
+        // Объединяем управление
+        float pitchInput = Mathf.Clamp(keyboardPitch + gamepadPitch, -1f, 1f);
+        float rollInput = Mathf.Clamp(keyboardRoll + gamepadRoll, -1f, 1f);
+        float yawInput = Mathf.Clamp(keyboardYaw + gamepadYaw, -1f, 1f);
+        float speedInput = Mathf.Clamp(keyboardSpeed + gamepadSpeed, -1f, 1f);
+
+// Передаём управление самолёту
+        targetPitch = pitchInput * pitchSpeed;
+
+        targetYaw = yawInput * yawSpeed;
+
+        float stickRoll = rollInput * rollSpeed;
+        targetRoll = stickRoll - targetYaw * yawRollInfluence;
+
+// Изменение заданной скорости
+	    forwardSpeed = Mathf.Lerp(minSpeed, maxSpeed, speedInput);
+	    
+		if (Gamepad.current != null && (Gamepad.current.buttonSouth.wasPressedThisFrame || (Keyboard.current.rKey.isPressed)) && !isTurningAround)
 		{
     		isTurningAround = true;
 		    turnAroundTarget = rb.rotation * Quaternion.Euler(0f, 180f, 0f);
