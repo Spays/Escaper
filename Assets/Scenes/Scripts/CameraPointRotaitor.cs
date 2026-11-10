@@ -9,9 +9,11 @@ public class CameraPointRotaitor : MonoBehaviour
     public float maxAngle = 30f;
 
     // Значение джойстика от -1 до 1
-    public float joystickInput;
+    private float joystickYInput;
+    private float joystickXInput;
 
-    private float currentAngle;
+    private float currentXAngle;
+    private float currentYAngle;
 
     void Update()
     {
@@ -19,20 +21,28 @@ public class CameraPointRotaitor : MonoBehaviour
         {
             // Левый стик: наклон носа вверх/вниз
             Vector2 leftStick = Gamepad.current.leftStick.ReadValue();
-            joystickInput = leftStick.y;
+            Vector2 rightStick = Gamepad.current.rightStick.ReadValue();
+            joystickYInput = leftStick.y;
+            joystickXInput = rightStick.x;
         }
 
-        float targetAngle = joystickInput * maxAngle;
+        float targetYAngle = joystickYInput * maxAngle;
+        float targetXAngle = joystickXInput * maxAngle;
 
-        currentAngle = Mathf.Lerp(
-            currentAngle,
-            targetAngle,
+        currentXAngle = Mathf.Lerp(
+            currentXAngle,
+            targetXAngle,
+            rotationSpeed * Time.deltaTime
+        );
+        currentYAngle = Mathf.Lerp(
+            currentYAngle,
+            targetYAngle,
             rotationSpeed * Time.deltaTime
         );
 
         transform.localRotation = Quaternion.Euler(
-            currentAngle,
-            0f,
+            currentYAngle,
+            currentXAngle,
             0f
         );
     }

@@ -10,6 +10,9 @@ public class AirplaneController : MonoBehaviour
     [Tooltip("Постоянная скорость движения вперёд")]
     public float forwardSpeed = 0f;
 
+    [Tooltip("Скорость изменения заданной скорости правым курком")]
+    public float speedChangeRate = 30f;
+    
     [Tooltip("Минимальная скорость при отпущенном курке")]
     public float minSpeed = 0f;
 
@@ -54,7 +57,7 @@ public class AirplaneController : MonoBehaviour
 	private bool isTurningAround;
 	private Quaternion turnAroundTarget;
 
-	public float speedChangeRate = 0;
+	public bool cruiseControlFlag = false;
 	
     private Rigidbody rb;
     private float currentSpeed;
@@ -115,7 +118,7 @@ public class AirplaneController : MonoBehaviour
 	        float decreaseInput = Gamepad.current.leftTrigger.ReadValue();
 
 	        gamepadSpeed = increaseInput - decreaseInput;
-	        forwardSpeed = Mathf.Lerp(minSpeed, maxSpeed, gamepadSpeed);
+	        //forwardSpeed = Mathf.Lerp(minSpeed, maxSpeed, gamepadSpeed);
         }
         // Объединяем управление
         float pitchInput = Mathf.Clamp(keyboardPitch + gamepadPitch, -1f, 1f);
@@ -123,7 +126,7 @@ public class AirplaneController : MonoBehaviour
         float yawInput = Mathf.Clamp(keyboardYaw + gamepadYaw, -1f, 1f);
         float speedInput = Mathf.Clamp(keyboardSpeed + gamepadSpeed, -1f, 1f);
 
-// Передаём управление самолёту
+		// Передаём управление самолёту
         targetPitch = pitchInput * pitchSpeed;
 
         targetYaw = yawInput * yawSpeed;
@@ -131,26 +134,30 @@ public class AirplaneController : MonoBehaviour
         float stickRoll = rollInput * rollSpeed;
         targetRoll = stickRoll - targetYaw * yawRollInfluence;
 
-// Изменение заданной скорости
+		// Изменение заданной скорости
 
-	    forwardSpeed = Mathf.Lerp(minSpeed, maxSpeed, speedInput);
 
-	    if (true)
+	    if (Gamepad.current.buttonNorth.wasPressedThisFrame || Keyboard.current.cKey.isPressed) cruiseControlFlag = !cruiseControlFlag ;
+	    
+	    
+	    if (cruiseControlFlag)
 	    {
-		    forwardSpeed = Mathf.Lerp(minSpeed, maxSpeed, speedInput);
-	    }
-	    else
-	    {
+		    
 		    // Изменение заданной скорости
 		    forwardSpeed += speedInput * speedChangeRate * Time.deltaTime;
 		    forwardSpeed = Mathf.Clamp(forwardSpeed, minSpeed, maxSpeed);
+	    }
+	    else
+	    {
+		    
+		    forwardSpeed = Mathf.Lerp(minSpeed, maxSpeed, speedInput);
 	    }
 	    
 	    
 		if (Gamepad.current != null && (Gamepad.current.buttonSouth.wasPressedThisFrame || (Keyboard.current.rKey.isPressed)) && !isTurningAround)
 		{
     		isTurningAround = true;
-		    turnAroundTarget = rb.rotation * Quaternion.Euler(0f, 180f, 0f);
+		    turnAroundTarget = rb.rotation * Quaternion.Euler(180f, 0f, 0f);
 		}
     }
 
