@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3ce0310f-d88a-48d4-a5a1-d6e14bd32a7d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Escaper/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Escaper/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +23,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scenes/Scripts/GravityAttractor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scenes/Scripts/PlayerController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scenes/Scripts/Sector.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scenes/Scripts/ShipEngineAudio.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="false" />
   <component name="ProjectColorInfo">{
@@ -50,7 +50,7 @@
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$PROJECT_DIR$/../EscaperBuildV0,005,1СС\Escaper.exe" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/../EscaperBuildV0,006PlanetAndAsteroids\Escaper.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="D:\GitHubRepositories\Escaper\EscaperBuildV0.002" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -126,7 +126,7 @@
       <workItem from="1793658137676" duration="1371000" />
       <workItem from="1794399942556" duration="6606000" />
       <workItem from="1794651343610" duration="14000" />
-      <workItem from="1794651381858" duration="1217000" />
+      <workItem from="1794651381858" duration="2302000" />
     </task>
     <servers />
   </component>
