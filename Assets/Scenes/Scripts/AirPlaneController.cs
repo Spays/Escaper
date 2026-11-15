@@ -30,8 +30,13 @@ public class AirplaneController : MonoBehaviour
     public float rollSpeed = 80f;
     [Tooltip("Скорость поворота влево/вправо (Yaw)")]
     public float yawSpeed = 30f;
-    [Header("Связь рыскания и крена")]
     
+    
+    [Header("Сглаживание ввода на джойстике")]
+    [Tooltip("Степень функции сглаживания ввода")]
+    public float inputSmoothJoystik = 2f;
+    
+    [Header("Связь рыскания и крена")]
     [Tooltip("Автоматический наклон при рыскании")]
     public float yawRollInfluence = 0.3f;
 
@@ -110,12 +115,12 @@ public class AirplaneController : MonoBehaviour
 	        Vector2 leftStick = Gamepad.current.leftStick.ReadValue();
 	        Vector2 rightStick = Gamepad.current.rightStick.ReadValue();
 
-	        gamepadPitch = leftStick.y;
-	        gamepadRoll = -leftStick.x;
-	        gamepadYaw = rightStick.x;
+	        gamepadPitch = SmoothInput(leftStick.y,inputSmoothJoystik);
+	        gamepadRoll = SmoothInput(-leftStick.x,inputSmoothJoystik);
+	        gamepadYaw = SmoothInput(rightStick.x,inputSmoothJoystik);
 
-	        float increaseInput = Gamepad.current.rightTrigger.ReadValue();
-	        float decreaseInput = Gamepad.current.leftTrigger.ReadValue();
+	        float increaseInput = SmoothInput(Gamepad.current.rightTrigger.ReadValue(),inputSmoothJoystik);
+	        float decreaseInput = SmoothInput(Gamepad.current.leftTrigger.ReadValue(),inputSmoothJoystik);
 
 	        gamepadSpeed = increaseInput - decreaseInput;
 	        //forwardSpeed = Mathf.Lerp(minSpeed, maxSpeed, gamepadSpeed);
@@ -276,5 +281,10 @@ public class AirplaneController : MonoBehaviour
         	rb.MoveRotation(turnAroundTarget);
         	isTurningAround = false;
 	    }
+	}
+	public float SmoothInput(float input, float power = 2f)
+	{
+		return Mathf.Sign(input) *
+		       Mathf.Pow(Mathf.Abs(input), power);
 	}
 }
