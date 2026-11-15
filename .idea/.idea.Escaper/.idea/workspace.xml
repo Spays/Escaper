@@ -8,7 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Escaper/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Escaper/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Scripts/AirPlaneController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Scripts/AirPlaneController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,6 +131,7 @@
       <workItem from="1794651343610" duration="14000" />
       <workItem from="1794651381858" duration="2902000" />
       <workItem from="1794681382568" duration="7110000" />
+      <workItem from="1794733331374" duration="3723000" />
     </task>
     <servers />
   </component>

@@ -9,6 +9,8 @@ public class AirplaneController : MonoBehaviour
     [Header("Скорость и Тяга")]
     [Tooltip("Постоянная скорость движения вперёд")]
     public float forwardSpeed = 0f;
+	[Tooltip("Текущая скорость движения вперёд")]
+	public float CurrentSpeed => rb != null ? rb.velocity.magnitude : 0f;
 
     [Tooltip("Скорость изменения заданной скорости правым курком")]
     public float speedChangeRate = 30f;
